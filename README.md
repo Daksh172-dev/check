@@ -37,3 +37,11 @@ Set the following repository secrets for CI/CD workflows:
 - `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` (for Vercel deploy workflow)
 - `RENDER_DEPLOY_HOOK_URL` (optional, for Render deploy hook job)
 - `RAILWAY_DEPLOY_HOOK_URL` (optional, for Railway deploy hook job)
+
+## Prisma seed
+
+```bash
+npm run prisma:generate
+npm run prisma:seed
+```
+

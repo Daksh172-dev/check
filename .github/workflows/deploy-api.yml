@@ -1,0 +1,30 @@
+name: Deploy API to Render/Railway
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/api/**'
+      - 'packages/**'
+      - 'prisma/**'
+      - '.github/workflows/deploy-api.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy-render:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.RENDER_DEPLOY_HOOK_URL != '' }}
+    steps:
+      - name: Trigger Render deploy hook
+        run: curl -fsS -X POST "$RENDER_DEPLOY_HOOK_URL"
+        env:
+          RENDER_DEPLOY_HOOK_URL: ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+
+  deploy-railway:
+    runs-on: ubuntu-latest
+    if: ${{ secrets.RAILWAY_DEPLOY_HOOK_URL != '' }}
+    steps:
+      - name: Trigger Railway deploy hook
+        run: curl -fsS -X POST "$RAILWAY_DEPLOY_HOOK_URL"
+        env:
+          RAILWAY_DEPLOY_HOOK_URL: ${{ secrets.RAILWAY_DEPLOY_HOOK_URL }}

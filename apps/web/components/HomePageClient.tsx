@@ -2,7 +2,7 @@
 
 import { ProductCard } from "@acme/ui";
 import Link from "next/link";
-import type { Product } from "@acme/types";
+import type { Product, ProductListResponse } from "@acme/types";
 import { useQuery } from "@tanstack/react-query";
 import { HeroCarousel } from "./HeroCarousel";
 
@@ -24,7 +24,9 @@ async function fetchProducts(): Promise<Product[]> {
   if (!response.ok) {
     throw new Error("Failed to fetch products");
   }
-  return response.json();
+
+  const data = (await response.json()) as Product[] | ProductListResponse;
+  return Array.isArray(data) ? data : data.items;
 }
 
 function ProductSkeleton() {
